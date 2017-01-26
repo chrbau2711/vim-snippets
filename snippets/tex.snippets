@@ -332,3 +332,105 @@ snippet urlc
 	\\url{`@+`} ${0}
 snippet hrefc
 	\\href{`@+`}{${1}} ${0}
+# Standard Document
+snippet document "preamble and document template"
+	\RequirePackage[l2tabu, orthodox]{nag}  % check for latex errors.
+	\documentclass[12pt]{article}
+	% Deal with encodings and languages.
+	\usepackage{lmodern}        % latin modern enhanced fonts.
+	\usepackage[T1]{fontenc}    % output character set for european languages.
+	\usepackage[utf8]{inputenc} % enable user to write utf-8 characters.
+	\usepackage{microtype}      % enhance typesetting for better reading experience.
+	\usepackage[english]{babel} % set language
+	% Deal with page margins and stuff.
+	\usepackage[a4paper]{geometry}
+	% Include math related packages.
+	\usepackage{amsmath}
+	\usepackage{amssymb}
+	\usepackage{siunitx}
+	% Nice-looking tables.
+	\usepackage{longtable}
+	\usepackage{booktabs}
+	% Dealing with images.
+	\usepackage{graphicx}
+	\usepackage{float}
+	% Dealing with code snippets.
+	\usepackage{minted} % Needs pygment for code highlighting.
+	% Nice header and footer environment.
+	\usepackage{fancyhdr}
+	% Specify references, bibliography, and quotes.
+	\usepackage[%
+		style=chicago-authordate,
+		sorting=nty,
+		bibwarn=true,
+		backref=true,
+		backend=biber]{biblatex}
+	\usepackage[babel]{csquotes}
+	% Fix link to figures.
+	\usepackage[hypcap]{caption}
+	% Create hyperlinks.
+	\usepackage{hyperref} % Needs to be included at the end.
+	\usepackage{cleveref} % Needs to be included after hyperref.
+
+	% Add bibliography file.
+	\addbibresource{${1:references.bib}}
+
+	% Create header and footer.
+	\fancyhf{}
+	\fancyfoot[C]{--~\thepage~--}
+	\pagestyle{fancy}
+
+	% Add title information.
+	\title{${2:The title}}
+	\author{Christian Bauer}
+	\date{\today}
+
+	\begin{document}
+	\maketitle
+
+	${0:${VISUAL}}
+
+	\printbibliography
+	\end{document}
+# Standard Letter
+snippet letter "template for a german din letter"
+	\RequirePackage[l2tabu, orthodox]{nag}  % check for latex errors.
+	\documentclass[a4paper, parskip=full, foldmarks=true,foldmarks=Hv,
+	fromrule=afteraddress, fromphone,fromemail,fromlogo, version=last]{scrlttr2}
+	% Deal with encodings and languages.
+	\usepackage{lmodern}        % latin modern enhanced fonts.
+	\usepackage[T1]{fontenc}    % output character set for european languages.
+	\usepackage[utf8]{inputenc} % enable user to write utf-8 characters.
+	\usepackage{microtype}      % enhance typesetting for better reading experience.
+	\usepackage[ngerman]{babel} % set language
+
+	\LoadLetterOption{DIN}
+	\renewcommand*{\raggedsignature}{\raggedright} % Make sane closing.
+
+	\begin{document}
+
+	\begin{letter}{%
+		${1:Name}\\
+		${2:Straße}\\
+		${3:Ort}%
+	}
+		\setkomavar{fromname}{Christian Bauer}
+		\setkomavar{fromaddress}{%
+			Eynattener Str. 55\\
+			52064 Aachen%
+		}
+		\setkomavar{fromphone}{+49\,(0)\,162\,7750200}
+		\setkomavar{fromemail}{chrbau2711@gmail.com}
+
+		\setkomavar{subject}{${4:Betreff}}
+
+		\opening{${5:Sehr geehrte Damen und Herren,}}
+
+		${0:hiermit...}
+
+		\closing{${6:Beste Grüße}}
+
+	\end{letter}
+
+	\end{document}
+	endsnippet
